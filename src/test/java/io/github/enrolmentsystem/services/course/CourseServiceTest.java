@@ -3,6 +3,7 @@ package io.github.enrolmentsystem.services.course;
 import io.github.enrolmentsystem.domain.course.Course;
 import io.github.enrolmentsystem.domain.course.Status;
 import io.github.enrolmentsystem.domain.course.request.CourseCreateRequest;
+import io.github.enrolmentsystem.domain.course.response.CourseDetailsResponse;
 import io.github.enrolmentsystem.domain.user.Role;
 import io.github.enrolmentsystem.domain.user.User;
 import io.github.enrolmentsystem.infra.exception.ValidationException;
@@ -19,8 +20,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -43,6 +50,7 @@ public class CourseServiceTest {
     private User instructor;
 
     private Course course;
+
 
 
     @BeforeEach
@@ -103,16 +111,60 @@ public class CourseServiceTest {
 
         verify(courseRepository, never()).save(any(Course.class));
     }
+    @Test
+    public void testGetCoursesByStatus_GivenStatusActive_ThenReturnAllActiveCourses() {
+    Status status = Status.ACTIVE;
+        int page = 0;
+        int size = 10;
 
+        List<Course> courseList = new ArrayList<>();
+        courseList.add(new Course(1L, "Curso A", "curso-a", "Descrição do Curso A"
+                , instructor, status, LocalDate.now(), null));
+        courseList.add(new Course(2L, "Curso B", "curso-b", "Descrição do Curso B"
+                , instructor, status, LocalDate.now(), null));
 
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Course> coursePage = new PageImpl<>(courseList, pageable, courseList.size());
+        given(courseRepository.findAllByStatus(status, pageable)).willReturn(coursePage);
 
+        Page<CourseDetailsResponse> resultPage = service.getCoursesByStatus(status, pageable);
 
+        Assertions.assertEquals(2, resultPage.getTotalElements());
+        Assertions.assertEquals("Curso A", resultPage.getContent().get(0).courseDetails().get("name"));
+        Assertions.assertEquals("curso-a", resultPage.getContent().get(0).courseDetails().get("code"));
+        Assertions.assertFalse(resultPage.getContent().get(0).courseDetails().containsKey("inactiveAt"));
+        Assertions.assertEquals("Curso B", resultPage.getContent().get(1).courseDetails().get("name"));
+        Assertions.assertEquals("curso-b", resultPage.getContent().get(1).courseDetails().get("code"));
+        Assertions.assertFalse(resultPage.getContent().get(1).courseDetails().containsKey("inactiveAt"));
 
+    }
 
+    @Test
+    public void testGetCoursesByStatus_GivenStatusInactive_ThenReturnAllInactiveCourses() {
+        Status status = Status.INACTIVE;
+        int page = 0;
+        int size = 10;
 
+        List<Course> courseList = new ArrayList<>();
+        courseList.add(new Course(1L, "Curso A", "curso-a", "Descrição do Curso A"
+                , instructor, status, LocalDate.of(2020, 2, 19),  LocalDate.now()));
+        courseList.add(new Course(2L, "Curso B", "curso-b", "Descrição do Curso B"
+                , instructor, status, LocalDate.of(2020, 2, 19), LocalDate.now()));
 
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Course> coursePage = new PageImpl<>(courseList, pageable, courseList.size());
+        given(courseRepository.findAllByStatus(status, pageable)).willReturn(coursePage);
 
+        Page<CourseDetailsResponse> resultPage = service.getCoursesByStatus(status, pageable);
 
+        Assertions.assertEquals(2, resultPage.getTotalElements());
+        Assertions.assertEquals("Curso A", resultPage.getContent().get(0).courseDetails().get("name"));
+        Assertions.assertEquals("curso-a", resultPage.getContent().get(0).courseDetails().get("code"));
+        Assertions.assertTrue(resultPage.getContent().get(0).courseDetails().containsKey("inactivatedAt"));
+        Assertions.assertEquals("Curso B", resultPage.getContent().get(1).courseDetails().get("name"));
+        Assertions.assertEquals("curso-b", resultPage.getContent().get(1).courseDetails().get("code"));
+        Assertions.assertTrue(resultPage.getContent().get(1).courseDetails().containsKey("inactivatedAt"));
+    }
 
 
 }
