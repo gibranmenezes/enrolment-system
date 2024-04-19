@@ -25,7 +25,6 @@ public class CourseServiceImpl implements CourseService {
         var instructor = userRepository.getReferenceById(request.instructorId());
         var course = new Course(request);
         course.setInstructor(instructor);
-
         return new CourseCreatResponse(courseRepository.save(course));
     }
 }
