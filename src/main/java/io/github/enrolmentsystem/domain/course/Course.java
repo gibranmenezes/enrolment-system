@@ -47,6 +47,7 @@ public class Course  {
         this.name = request.name();
         this.code = request.code();
         this.description = request.description();
+        this.createdAt = LocalDate.now();
 
     }
 

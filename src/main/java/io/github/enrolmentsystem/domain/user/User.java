@@ -1,6 +1,7 @@
 package io.github.enrolmentsystem.domain.user;
 
 
+import io.github.enrolmentsystem.domain.user.request.CreateUserRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -25,6 +26,7 @@ public class User {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-    LocalDate createdAt;
+    private LocalDate createdAt;
+
 
 }
