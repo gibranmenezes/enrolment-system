@@ -22,6 +22,10 @@ public class CourseServiceImpl implements CourseService {
         if (!userRepository.existsByIdAndRole(request.instructorId(), Role.INSTRUCTOR)){
             throw new ValidationException("There is no none instructor with this id: " + request.instructorId());
         }
+        if (courseRepository.existsByCode(request.code())) {
+            throw new ValidationException("This course already exists!");
+        }
+
         var instructor = userRepository.getReferenceById(request.instructorId());
         var course = new Course(request);
         course.setInstructor(instructor);

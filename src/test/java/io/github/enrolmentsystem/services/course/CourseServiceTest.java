@@ -11,6 +11,7 @@ import io.github.enrolmentsystem.repository.UserRepository;
 import io.github.enrolmentsystem.service.impl.CourseServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.mockito.BDDMockito.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -56,12 +57,14 @@ public class CourseServiceTest {
 
     }
     @Test
-     void testCreateCourse_WhenInstructorIdExistsAndIsInstructor() {
+    @DisplayName("if exists an instructor with the same id than request and there is no one course with the code")
+     void testCreateCourse_WhenInstructorIdExistsAndNoExistCourseWithCode_ThenCreateCourse() {
        given(userRepository.existsByIdAndRole(request.instructorId(), Role.INSTRUCTOR))
                 .willReturn(true);
 
         given(userRepository.getReferenceById(request.instructorId())).willReturn(instructor);
         given(courseRepository.save(course)).willReturn(course);
+        given(courseRepository.existsByCode(request.code())).willReturn(false);
 
 
         var response = service.createCourse(request);
@@ -74,7 +77,8 @@ public class CourseServiceTest {
     @Test
     void testCreateCourse_WhenInstructorIdDoesNotExist() {
         given(userRepository.existsByIdAndRole(request.instructorId(), Role.INSTRUCTOR))
-                .willReturn(false);
+                .willReturn(true);
+
        ValidationException exception = assertThrows(ValidationException.class,
                 () -> service.createCourse(request));
 
@@ -83,6 +87,24 @@ public class CourseServiceTest {
 
         verify(courseRepository, never()).save(any(Course.class));
     }
+
+    @Test
+    void testCreateCourse_WhenInstructorExistsAndTheCodeAlreadyExists_ThenThrowsException() {
+        given(userRepository.existsByIdAndRole(request.instructorId(), Role.INSTRUCTOR))
+                .willReturn(true);
+        given(courseRepository.existsByCode(request.code())).willReturn(true);
+
+
+        ValidationException exception = assertThrows(ValidationException.class,
+                () -> service.createCourse(request));
+
+        String expectedMessage = "This course already exists!";
+        assert(exception.getMessage().equals(expectedMessage));
+
+        verify(courseRepository, never()).save(any(Course.class));
+    }
+
+
 
 
 

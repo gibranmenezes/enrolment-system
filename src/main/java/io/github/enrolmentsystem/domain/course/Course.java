@@ -48,7 +48,12 @@ public class Course  {
         this.code = request.code();
         this.description = request.description();
         this.createdAt = LocalDate.now();
+        this.inactivedAt = null;
 
+    }
+
+    public void inactivateCourse(){
+        this.status = Status.INACTIVE;
     }
 
 
