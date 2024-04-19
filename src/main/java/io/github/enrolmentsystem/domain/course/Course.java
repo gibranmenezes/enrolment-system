@@ -1,5 +1,6 @@
 package io.github.enrolmentsystem.domain.course;
 
+import io.github.enrolmentsystem.domain.course.request.CourseCreateRequest;
 import io.github.enrolmentsystem.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,20 +22,27 @@ public class Course  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
     private String code;
 
     private String description;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-
     private User instructor;
 
-    private Boolean Status;
+    private Status status;
 
     private LocalDate createdAt;
 
     private LocalDate inactivedAt;
 
 
+    public Course(CourseCreateRequest request) {
+        this.status = Status.ACTIVE;
+        this.name = request.name();
+        this.code = request.code();
+
+    }
 }
