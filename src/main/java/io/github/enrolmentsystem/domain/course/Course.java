@@ -40,7 +40,7 @@ public class Course  {
     private LocalDate createdAt;
 
     @Setter
-    private LocalDate inactivedAt;
+    private LocalDate inactivatedAt;
 
     public Course(CourseCreateRequest request) {
         this.status = Status.ACTIVE;
@@ -48,7 +48,7 @@ public class Course  {
         this.code = request.code();
         this.description = request.description();
         this.createdAt = LocalDate.now();
-        this.inactivedAt = null;
+        this.inactivatedAt = null;
 
     }
 
