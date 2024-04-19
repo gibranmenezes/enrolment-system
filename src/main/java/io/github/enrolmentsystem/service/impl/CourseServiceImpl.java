@@ -4,6 +4,7 @@ import io.github.enrolmentsystem.domain.course.Course;
 import io.github.enrolmentsystem.domain.course.response.CourseCreatResponse;
 import io.github.enrolmentsystem.domain.course.request.CourseCreateRequest;
 import io.github.enrolmentsystem.domain.user.Role;
+import io.github.enrolmentsystem.infra.exception.ValidationException;
 import io.github.enrolmentsystem.repository.CourseRepository;
 import io.github.enrolmentsystem.repository.UserRepository;
 import io.github.enrolmentsystem.service.CourseService;
@@ -18,11 +19,13 @@ public class CourseServiceImpl implements CourseService {
     private final UserRepository userRepository;
 
     public CourseCreatResponse createCourse(CourseCreateRequest request){
-        if (!userRepository.existsByIdAndRole(request.instructorId(), Role.INSTRUCTOR){
-
+        if (!userRepository.existsByIdAndRole(request.instructorId(), Role.INSTRUCTOR)){
+            throw new ValidationException("There is no none instructor with this id: " + request.instructorId());
         }
-
+        var instructor = userRepository.getReferenceById(request.instructorId());
         var course = new Course(request);
+        course.setInstructor(instructor);
+
         return new CourseCreatResponse(courseRepository.save(course));
     }
 }
