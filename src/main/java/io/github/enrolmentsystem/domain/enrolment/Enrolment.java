@@ -23,10 +23,16 @@ public class Enrolment {
 
     @ManyToOne
     @JoinColumn(name = "course_id")
-    private User student;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Course course;
     private LocalDate enrollmentAt;
+
+    public Enrolment(User user, Course course){
+        this.user = user;
+        this.course = course;
+        this.enrollmentAt = LocalDate.now();
+    }
 }

@@ -48,7 +48,6 @@ public class CourseServiceTest {
     private CourseRepository courseRepository;
     @Mock
     private CourseCodeValidation courseCodeValidation;
-
     @Mock
     private InstructorExistenceValidation instructorExistenceValidation;
     @Mock
@@ -94,6 +93,12 @@ public class CourseServiceTest {
         Assertions.assertNotNull(response);
         Assertions.assertEquals(response.code(), "curso-test");
     }
+
+//    @Test
+//    void testCreateCourse_GivenAnNotInstructorId_ThenThrowsException(){
+//        given(service.createValidators.)
+//
+//    }
 
 
     @Test
