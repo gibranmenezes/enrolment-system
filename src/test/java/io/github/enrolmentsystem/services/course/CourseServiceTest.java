@@ -82,8 +82,6 @@ public class CourseServiceTest {
 
     }
 
-
-
     @Test
     void testCreateCourse_WhenInstructorExistsAndNoExistCourseWithCode_ThenCreateCourse() {
         given(userRepository.getReferenceById(request.instructorId())).willReturn(instructor);
