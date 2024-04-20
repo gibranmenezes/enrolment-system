@@ -45,7 +45,7 @@ public class UserServiceTest {
 
     @Test
     void registerTest_GivenCreateRequest_ThenCreateUser() {
-        given(userRepository.existsByUsernameAndEmail(request.username(), request.email())).willReturn(true);
+        given(userRepository.existsByUsernameAndEmail(request.username(), request.email())).willReturn(false);
 
         var response = userService.register(request);
 
@@ -58,7 +58,7 @@ public class UserServiceTest {
 
     @Test
     void registerTest_GivenExistingEmailAndUserName_ThenThrowException() {
-        given(userRepository.existsByUsernameAndEmail(request.username(), request.email())).willReturn(false);
+        given(userRepository.existsByUsernameAndEmail(request.username(), request.email())).willReturn(true);
 
         ValidationException exception = assertThrows(ValidationException.class, () -> userService.register(request));
         assertEquals("Username and email already registered", exception.getMessage());

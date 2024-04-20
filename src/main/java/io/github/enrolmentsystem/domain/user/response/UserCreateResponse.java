@@ -3,8 +3,10 @@ package io.github.enrolmentsystem.domain.user.response;
 import io.github.enrolmentsystem.domain.user.Role;
 import io.github.enrolmentsystem.domain.user.User;
 
-public record UserCreateResponse(String name, String email, Role role) {
+import java.time.LocalDate;
+
+public record UserCreateResponse(String name, String userName, String email, Role role, LocalDate createdAt) {
     public UserCreateResponse(User user) {
-        this(user.getName(), user.getEmail(), user.getRole());
+        this(user.getName(), user.getUsername(), user.getEmail(), user.getRole(), user.getCreatedAt());
     }
 }

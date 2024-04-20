@@ -1,6 +1,5 @@
 package io.github.enrolmentsystem.domain.validations.course.creation;
 
-import io.github.enrolmentsystem.domain.course.Course;
 import io.github.enrolmentsystem.domain.course.request.CourseCreateRequest;
 import io.github.enrolmentsystem.domain.user.Role;
 import io.github.enrolmentsystem.infra.exception.ValidationException;

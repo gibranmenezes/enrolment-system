@@ -11,7 +11,9 @@ import io.github.enrolmentsystem.repository.EnrolmentRepository;
 import io.github.enrolmentsystem.repository.UserRepository;
 import io.github.enrolmentsystem.service.EnrolmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +25,12 @@ public class EnrolmentServiceImpl implements EnrolmentService {
     private final EnrolmentRepository enrolmentRepository;
     private final UserRepository userRepository;
     private final CourseRepository courseRepository;
-    private final List<CreateEnrolmentValidator> createValidators = new ArrayList<>();
+
+    @Autowired
+    private  List<CreateEnrolmentValidator> createValidators = new ArrayList<>();
 
     @Override
+    @Transactional
     public EnrolmentCreateResponse enrol(EnronlmentCreateRequest request){
         createValidators.forEach(v -> v.validate(request));
 
