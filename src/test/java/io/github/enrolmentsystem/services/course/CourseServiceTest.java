@@ -34,6 +34,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -90,13 +91,6 @@ public class CourseServiceTest {
         Assertions.assertNotNull(response);
         Assertions.assertEquals(response.code(), "curso-test");
     }
-
-//    @Test
-//    void testCreateCourse_GivenAnNotInstructorId_ThenThrowsException(){
-//        given(service.createValidators.)
-//
-//    }
-
 
     @Test
     public void testGetCoursesByStatus_GivenStatusActive_ThenReturnAllActiveCourses() {

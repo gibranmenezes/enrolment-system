@@ -5,12 +5,14 @@ import io.github.enrolmentsystem.domain.course.Status;
 import io.github.enrolmentsystem.domain.course.request.CourseCreateRequest;
 import io.github.enrolmentsystem.domain.course.response.CourseCreatResponse;
 import io.github.enrolmentsystem.domain.course.response.CourseDetailsResponse;
+import io.github.enrolmentsystem.domain.course.response.CourseUpdateResponse;
 import io.github.enrolmentsystem.domain.validations.course.creation.CreateCourseValidator;
 import io.github.enrolmentsystem.infra.exception.ValidationException;
 import io.github.enrolmentsystem.repository.CourseRepository;
 import io.github.enrolmentsystem.repository.UserRepository;
 import io.github.enrolmentsystem.service.CourseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,7 +29,9 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
-    public final List<CreateCourseValidator> createValidators = new ArrayList<>();
+
+    @Autowired
+    public  List<CreateCourseValidator> createValidators = new ArrayList<>();
 
 
 
@@ -63,10 +67,12 @@ public class CourseServiceImpl implements CourseService {
 
     }
     @Override
-    public void inactivateCourse(String code){
-        var course = courseRepository.findCourseByCode(code);
+    public CourseUpdateResponse inactivateCourse(String code){
+       var course = courseRepository.findCourseByCode(code);
       if (course == null) { throw new ValidationException("Course not found"); }
        course.inactivateCourse();
+
+       return new CourseUpdateResponse(courseRepository.save(course));
     }
 
 }
