@@ -66,6 +66,7 @@ public class EnrolmentServiceTest {
         Assertions.assertNotNull(response);
         Assertions.assertEquals(user.getUsername(), response.userName());
         Assertions.assertEquals(course.getCode(), response.courseCode());
+        Assertions.assertEquals(LocalDate.now(), enrol.getEnrollmentAt());
 
     }
 
