@@ -48,7 +48,7 @@ public class EnrolmentServiceTest {
     private Enrolment enrol;
     @BeforeEach
     public void setUp() {
-        user = new User(1L, "joao@gmail.com", "joao", "123456",
+        user = new User(1L, "joao","joao@gmail.com", "joao", "123456",
                 Role.STUDENT, LocalDate.now());
         course = new Course(1L, "curso", "code", "desc",
                 user, Status.ACTIVE, LocalDate.now(), LocalDate.now());

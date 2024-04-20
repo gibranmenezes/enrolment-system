@@ -1,11 +1,9 @@
 package io.github.enrolmentsystem.domain.user;
 
 
-import io.github.enrolmentsystem.domain.user.request.CreateUserRequest;
 import io.github.enrolmentsystem.domain.user.request.UserCreateRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

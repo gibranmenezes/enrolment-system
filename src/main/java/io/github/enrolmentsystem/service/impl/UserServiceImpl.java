@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
 
      public UserCreateResponse register(UserCreateRequest request) {
           if (!userRepository.existsByUsernameAndEmail(request.username(), request.email())) {
-               throw new ValidationException("User name and email already registered");
+               throw new ValidationException("Username and email already registered");
           }
           var user = new User(request);
 
