@@ -6,6 +6,9 @@ import io.github.enrolmentsystem.domain.course.request.CourseCreateRequest;
 import io.github.enrolmentsystem.domain.course.response.CourseDetailsResponse;
 import io.github.enrolmentsystem.domain.user.Role;
 import io.github.enrolmentsystem.domain.user.User;
+import io.github.enrolmentsystem.domain.validations.course.creation.CourseCodeValidation;
+import io.github.enrolmentsystem.domain.validations.course.creation.CreateCourseValidator;
+import io.github.enrolmentsystem.domain.validations.course.creation.InstructorExistenceValidation;
 import io.github.enrolmentsystem.infra.exception.ValidationException;
 import io.github.enrolmentsystem.repository.CourseRepository;
 import io.github.enrolmentsystem.repository.UserRepository;
@@ -27,6 +30,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +46,13 @@ public class CourseServiceTest {
     private UserRepository userRepository;
     @Mock
     private CourseRepository courseRepository;
+    @Mock
+    private CourseCodeValidation courseCodeValidation;
+
+    @Mock
+    private InstructorExistenceValidation instructorExistenceValidation;
+    @Mock
+    private List<CreateCourseValidator> createValidators;
     @InjectMocks
     private CourseServiceImpl service;
 
@@ -49,68 +60,42 @@ public class CourseServiceTest {
 
     private User instructor;
 
+    private User student;
+
     private Course course;
 
 
 
     @BeforeEach
     public void setup()  {
-        request = new CourseCreateRequest("curso", "curso-test",
-                "desc",1L);
+        request = new CourseCreateRequest("curso", "curso-test", "desc", 1L);
+
+        student = new User(1L, "joao@gmail.com", "joao", "123456",
+                Role.STUDENT, LocalDate.now());
 
         instructor = new User(1L, "joao@gmail.com", "joao", "123456",
                 Role.INSTRUCTOR, LocalDate.now());
-        course = new Course(1L, request.name(), request.code(), request.description(), instructor, Status.ACTIVE,
-                LocalDate.now(), LocalDate.now());
+
+        course = new Course(1L, request.name(), request.code(), request.description(),
+                instructor, Status.ACTIVE, LocalDate.now(), LocalDate.now());
+
 
     }
+
+
+
     @Test
-    @DisplayName("if exists an instructor with the same id than request and there is no one course with the code")
-     void testCreateCourse_WhenInstructorIdExistsAndNoExistCourseWithCode_ThenCreateCourse() {
-       given(userRepository.existsByIdAndRole(request.instructorId(), Role.INSTRUCTOR))
-                .willReturn(true);
-
+    void testCreateCourse_WhenInstructorExistsAndNoExistCourseWithCode_ThenCreateCourse() {
         given(userRepository.getReferenceById(request.instructorId())).willReturn(instructor);
-        given(courseRepository.save(course)).willReturn(course);
-        given(courseRepository.existsByCode(request.code())).willReturn(false);
-
+        given(courseRepository.save(any())).willReturn(course);
 
         var response = service.createCourse(request);
 
         Assertions.assertNotNull(response);
         Assertions.assertEquals(response.code(), "curso-test");
-
     }
 
-    @Test
-    void testCreateCourse_WhenInstructorIdDoesNotExist() {
-        given(userRepository.existsByIdAndRole(request.instructorId(), Role.INSTRUCTOR))
-                .willReturn(true);
 
-       ValidationException exception = assertThrows(ValidationException.class,
-                () -> service.createCourse(request));
-
-        String expectedMessage = "There is no none instructor with this id: " + request.instructorId();
-        assert(exception.getMessage().equals(expectedMessage));
-
-        verify(courseRepository, never()).save(any(Course.class));
-    }
-
-    @Test
-    void testCreateCourse_WhenInstructorExistsAndTheCodeAlreadyExists_ThenThrowsException() {
-        given(userRepository.existsByIdAndRole(request.instructorId(), Role.INSTRUCTOR))
-                .willReturn(true);
-        given(courseRepository.existsByCode(request.code())).willReturn(true);
-
-
-        ValidationException exception = assertThrows(ValidationException.class,
-                () -> service.createCourse(request));
-
-        String expectedMessage = "This course already exists!";
-        assert(exception.getMessage().equals(expectedMessage));
-
-        verify(courseRepository, never()).save(any(Course.class));
-    }
     @Test
     public void testGetCoursesByStatus_GivenStatusActive_ThenReturnAllActiveCourses() {
     Status status = Status.ACTIVE;

@@ -2,11 +2,10 @@ package io.github.enrolmentsystem.service.impl;
 
 import io.github.enrolmentsystem.domain.course.Course;
 import io.github.enrolmentsystem.domain.course.Status;
-import io.github.enrolmentsystem.domain.course.response.CourseCreatResponse;
 import io.github.enrolmentsystem.domain.course.request.CourseCreateRequest;
+import io.github.enrolmentsystem.domain.course.response.CourseCreatResponse;
 import io.github.enrolmentsystem.domain.course.response.CourseDetailsResponse;
-import io.github.enrolmentsystem.domain.user.Role;
-import io.github.enrolmentsystem.infra.exception.ValidationException;
+import io.github.enrolmentsystem.domain.validations.course.creation.CreateCourseValidator;
 import io.github.enrolmentsystem.repository.CourseRepository;
 import io.github.enrolmentsystem.repository.UserRepository;
 import io.github.enrolmentsystem.service.CourseService;
@@ -27,16 +26,14 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
+    public final List<CreateCourseValidator> createValidators = new ArrayList<>();
+
+
 
     @Override
     @Transactional
     public CourseCreatResponse createCourse(CourseCreateRequest request){
-        if (!userRepository.existsByIdAndRole(request.instructorId(), Role.INSTRUCTOR)){
-            throw new ValidationException("There is no none instructor with this id: " + request.instructorId());
-        }
-        if (courseRepository.existsByCode(request.code())) {
-            throw new ValidationException("This course already exists!");
-        }
+        createValidators.forEach(v -> v.validate(request));
 
         var instructor = userRepository.getReferenceById(request.instructorId());
         var course = new Course(request);
