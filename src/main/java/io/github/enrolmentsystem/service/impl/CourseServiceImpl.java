@@ -6,6 +6,7 @@ import io.github.enrolmentsystem.domain.course.request.CourseCreateRequest;
 import io.github.enrolmentsystem.domain.course.response.CourseCreatResponse;
 import io.github.enrolmentsystem.domain.course.response.CourseDetailsResponse;
 import io.github.enrolmentsystem.domain.validations.course.creation.CreateCourseValidator;
+import io.github.enrolmentsystem.infra.exception.ValidationException;
 import io.github.enrolmentsystem.repository.CourseRepository;
 import io.github.enrolmentsystem.repository.UserRepository;
 import io.github.enrolmentsystem.service.CourseService;
@@ -61,11 +62,11 @@ public class CourseServiceImpl implements CourseService {
         });
 
     }
-
     @Override
-    public void inactivateCourse(Long id){
-        var course = courseRepository.getReferenceById(id);
-        course.inactivateCourse();
+    public void inactivateCourse(String code){
+        var course = courseRepository.findCourseByCode(code);
+      if (course == null) { throw new ValidationException("Course not found"); }
+       course.inactivateCourse();
     }
 
 }

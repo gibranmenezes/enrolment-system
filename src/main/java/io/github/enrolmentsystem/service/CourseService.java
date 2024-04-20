@@ -11,7 +11,7 @@ public interface CourseService {
 
     CourseCreatResponse createCourse(CourseCreateRequest request);
 
-    void inactivateCourse(Long id);
+    void inactivateCourse(String code);
 
     Page<CourseDetailsResponse> getCoursesByStatus(Status status, Pageable pagination);
 

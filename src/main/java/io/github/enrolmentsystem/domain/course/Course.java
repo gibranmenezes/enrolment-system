@@ -54,6 +54,7 @@ public class Course  {
 
     public void inactivateCourse(){
         this.status = Status.INACTIVE;
+        this.inactivatedAt = LocalDate.now();
     }
 
 

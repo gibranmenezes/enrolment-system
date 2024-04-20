@@ -80,6 +80,8 @@ public class CourseServiceTest {
                 instructor, Status.ACTIVE, LocalDate.now(), LocalDate.now());
 
 
+
+
     }
 
     @Test
@@ -148,6 +150,37 @@ public class CourseServiceTest {
         Assertions.assertEquals("curso-b", resultPage.getContent().get(1).courseDetails().get("code"));
         Assertions.assertTrue(resultPage.getContent().get(1).courseDetails().containsKey("inactivatedAt"));
     }
+
+
+    @Test
+    public void testInactivateCourse_GivenCourseCode_ThenInactivateStatusAndSetInactivateDate(){
+        var courseB = new Course(1L, "cursoB", "curso-b", "desc-b",
+                instructor, Status.ACTIVE, LocalDate.now(), null);
+        given(courseRepository.findCourseByCode("curso-b")).willReturn(courseB);
+
+        service.inactivateCourse("curso-b");
+
+        verify(courseRepository, times(1)).findCourseByCode("curso-b");
+
+        Assertions.assertSame(Status.INACTIVE, courseB.getStatus());
+        Assertions.assertEquals(LocalDate.now(), courseB.getInactivatedAt());
+    }
+
+    @Test
+    public void testInactivateCourse_WhenCourseNotFound_ThrowsValidationException() {
+        given(courseRepository.findCourseByCode(anyString())).willReturn(null);
+
+       String nonExistingCourseCode = "Course not found";
+
+       Assertions.assertThrows(ValidationException.class, () -> {
+            service.inactivateCourse(nonExistingCourseCode);
+        });
+
+        verify(courseRepository, times(1)).findCourseByCode(nonExistingCourseCode);
+    }
+
+
+
 
 
 }
