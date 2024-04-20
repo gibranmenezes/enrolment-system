@@ -25,6 +25,7 @@ public class EnrolmentServiceImpl implements EnrolmentService {
     private final CourseRepository courseRepository;
     private final List<CreateEnrolmentValidator> createValidators = new ArrayList<>();
 
+    @Override
     public EnrolmentCreateResponse enrol(EnronlmentCreateRequest request){
         createValidators.forEach(v -> v.validate(request));
 
