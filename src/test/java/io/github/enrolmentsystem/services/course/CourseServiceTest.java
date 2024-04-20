@@ -69,17 +69,14 @@ public class CourseServiceTest {
     public void setup()  {
         request = new CourseCreateRequest("curso", "curso-test", "desc", 1L);
 
-        student = new User(1L, "joao@gmail.com", "joao", "123456",
+        student = new User(1L, "joao", "joao@gmail.com", "joao", "123456",
                 Role.STUDENT, LocalDate.now());
 
-        instructor = new User(1L, "joao@gmail.com", "joao", "123456",
+        instructor = new User(1L, "joao", "joao@gmail.com", "joao", "123456",
                 Role.INSTRUCTOR, LocalDate.now());
 
         course = new Course(1L, request.name(), request.code(), request.description(),
                 instructor, Status.ACTIVE, LocalDate.now(), LocalDate.now());
-
-
-
 
     }
 
