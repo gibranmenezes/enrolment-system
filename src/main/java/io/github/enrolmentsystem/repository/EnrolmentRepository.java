@@ -7,8 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 public interface EnrolmentRepository extends JpaRepository<Enrolment, Long> {
 
     @Query("""
-            SELECT count(e) From Enrolment e
-            where e.user.id =  :userId
-            """)
+        SELECT CASE WHEN count(e) > 0 THEN true ELSE false END
+        FROM Enrolment e
+        WHERE e.user.id = :userId
+    """)
     Boolean existsEnrolmentByUser(Long userId);
 }
