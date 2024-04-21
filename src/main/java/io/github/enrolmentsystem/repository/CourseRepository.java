@@ -19,5 +19,15 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query("select c from Course c where c.code = :code")
     Course findCourseByCode(String code);
 
+    @Query("""
+                   SELECT c
+                   FROM Course c
+                   LEFT JOIN Enrolment e ON c.id = e.course.id
+                   GROUP BY c.id
+                   HAVING COUNT(e.id) > 4
+            
+                """)
+    List<Course> getCoursesWithMoreThanFourEnrolments();
+
 
 }

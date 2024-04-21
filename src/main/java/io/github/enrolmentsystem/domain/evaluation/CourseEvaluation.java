@@ -11,7 +11,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Entity(name = "evaluation")
+@Entity()
 @Table(name = "course_evaluation")
 @AllArgsConstructor
 @NoArgsConstructor

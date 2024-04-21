@@ -4,7 +4,7 @@ import io.github.enrolmentsystem.domain.evaluation.CourseEvaluation;
 import io.github.enrolmentsystem.domain.evaluation.request.EvaluationRequest;
 import io.github.enrolmentsystem.domain.validations.evaluation.EvaluationSubmitValidator;
 import io.github.enrolmentsystem.repository.CourseRepository;
-import io.github.enrolmentsystem.repository.EvaluationRepository;
+import io.github.enrolmentsystem.repository.CourseEvaluationRepository;
 import io.github.enrolmentsystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class CourseEvaluationServiceImpl {
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
     private final  NotificationService notificationService;
-    private final EvaluationRepository evaluationRepository;
+    private final CourseEvaluationRepository courseEvaluationRepository;
 
     private List<EvaluationSubmitValidator> validators = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public class CourseEvaluationServiceImpl {
         evaluation.setCourse(course);
         evaluation.setUser(user);
 
-        var savedEvaluation = evaluationRepository.save(evaluation);
+        var savedEvaluation = courseEvaluationRepository.save(evaluation);
 
         course.addEvaluation(savedEvaluation);
 
