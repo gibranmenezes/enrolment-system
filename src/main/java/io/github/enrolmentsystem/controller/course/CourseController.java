@@ -2,7 +2,7 @@ package io.github.enrolmentsystem.controller.course;
 
 import io.github.enrolmentsystem.domain.course.Status;
 import io.github.enrolmentsystem.domain.course.request.CourseCreateRequest;
-import io.github.enrolmentsystem.domain.course.response.CourseCreatResponse;
+import io.github.enrolmentsystem.domain.course.response.CourseCreateResponse;
 import io.github.enrolmentsystem.domain.course.response.CourseDetailsResponse;
 import io.github.enrolmentsystem.domain.course.response.CourseUpdateResponse;
 import io.github.enrolmentsystem.service.impl.CourseServiceImpl;
@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +22,7 @@ public class CourseController {
     private final CourseServiceImpl courseService;
 
     @PostMapping
-    public ResponseEntity<CourseCreatResponse> create(@Valid @RequestBody CourseCreateRequest request){
+    public ResponseEntity<CourseCreateResponse> create(@Valid @RequestBody CourseCreateRequest request){
         return ResponseEntity.ok(courseService.createCourse(request));
     }
     @GetMapping

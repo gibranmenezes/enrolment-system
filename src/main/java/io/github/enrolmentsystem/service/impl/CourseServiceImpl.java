@@ -3,7 +3,7 @@ package io.github.enrolmentsystem.service.impl;
 import io.github.enrolmentsystem.domain.course.Course;
 import io.github.enrolmentsystem.domain.course.Status;
 import io.github.enrolmentsystem.domain.course.request.CourseCreateRequest;
-import io.github.enrolmentsystem.domain.course.response.CourseCreatResponse;
+import io.github.enrolmentsystem.domain.course.response.CourseCreateResponse;
 import io.github.enrolmentsystem.domain.course.response.CourseDetailsResponse;
 import io.github.enrolmentsystem.domain.course.response.CourseUpdateResponse;
 import io.github.enrolmentsystem.domain.validations.course.creation.CreateCourseValidator;
@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Service
@@ -37,13 +37,13 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public CourseCreatResponse createCourse(CourseCreateRequest request){
+    public CourseCreateResponse createCourse(CourseCreateRequest request){
         createValidators.forEach(v -> v.validate(request));
 
         var instructor = userRepository.getReferenceById(request.instructorId());
         var course = new Course(request);
         course.setInstructor(instructor);
-        return new CourseCreatResponse(courseRepository.save(course));
+        return new CourseCreateResponse(courseRepository.save(course));
     }
 
     @Override
@@ -51,7 +51,8 @@ public class CourseServiceImpl implements CourseService {
         Page<Course> coursePage = courseRepository.findAllByStatus(status, pagination);
 
         return coursePage.map(course -> {
-            HashMap<String, String> courseDetails = new HashMap<>();
+            LinkedHashMap<String, String> courseDetails = new  LinkedHashMap<>();
+            courseDetails.put("id", course.getId().toString());
             courseDetails.put("name", course.getName());
             courseDetails.put("code", course.getCode());
             courseDetails.put("description", course.getDescription());
