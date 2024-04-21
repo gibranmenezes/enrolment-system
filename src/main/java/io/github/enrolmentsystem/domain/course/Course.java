@@ -34,6 +34,7 @@ public class Course  {
     private User instructor;
 
     @Setter
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @Setter
