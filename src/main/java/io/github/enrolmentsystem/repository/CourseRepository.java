@@ -2,7 +2,6 @@ package io.github.enrolmentsystem.repository;
 
 import io.github.enrolmentsystem.domain.course.Course;
 import io.github.enrolmentsystem.domain.course.Status;
-import io.github.enrolmentsystem.domain.course.response.CourseDetailsResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,15 +18,8 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query("select c from Course c where c.code = :code")
     Course findCourseByCode(String code);
 
-    @Query("""
-                   SELECT c
-                   FROM Course c
-                   LEFT JOIN Enrolment e ON c.id = e.course.id
-                   GROUP BY c.id
-                   HAVING COUNT(e.id) > 4
-            
-                """)
-    List<Course> getCoursesWithMoreThanFourEnrolments();
-
+   // @Query("SELECT c FROM Course c WHERE (SELECT COUNT(e) FROM Enrolment e WHERE e.course.id = c.id) > 4")
+   @Query("SELECT c FROM Course c , Enrolment e  where c.id = e.course.id GROUP BY c.id HAVING COUNT(e.course.id) > 4")
+   List<Course> getCoursesWithMoreThanFourEnrolments();
 
 }

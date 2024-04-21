@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "enrolment")
+@Table
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -22,11 +22,11 @@ public class Enrolment {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "course_id")
     private Course course;
     private LocalDate enrollmentAt;
 

@@ -1,6 +1,7 @@
 package io.github.enrolmentsystem.domain.course;
 
 import io.github.enrolmentsystem.domain.course.request.CourseCreateRequest;
+import io.github.enrolmentsystem.domain.enrolment.Enrolment;
 import io.github.enrolmentsystem.domain.evaluation.CourseEvaluation;
 import io.github.enrolmentsystem.domain.user.User;
 import jakarta.persistence.*;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "course")
+@Table
 @Getter
 @Setter
 @NoArgsConstructor
@@ -48,6 +49,9 @@ public class Course  {
     private LocalDate inactivatedAt;
 
     @OneToMany(mappedBy = "course")
+    private List<Enrolment> enrolments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "course")
     private List<CourseEvaluation> courseEvaluations = new ArrayList<>();
 
     public Course(CourseCreateRequest request) {
@@ -66,6 +70,10 @@ public class Course  {
 
     public void addEvaluation(CourseEvaluation evaluation){
         this.courseEvaluations.add(evaluation);
+    }
+
+    public void addEnrolment(Enrolment enrolment){
+        this.enrolments.add(enrolment);
     }
 
 

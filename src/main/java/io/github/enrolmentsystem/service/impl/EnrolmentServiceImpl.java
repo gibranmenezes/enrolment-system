@@ -30,15 +30,17 @@ public class EnrolmentServiceImpl implements EnrolmentService {
     private  List<CreateEnrolmentValidator> createValidators = new ArrayList<>();
 
     @Override
-    @Transactional
     public EnrolmentCreateResponse enrol(EnronlmentCreateRequest request){
         createValidators.forEach(v -> v.validate(request));
 
-        var course = courseRepository.getReferenceById(request.userId());
-        var user = userRepository.getReferenceById(request.courseId());
+        var course = courseRepository.getReferenceById(request.courseId());
+        var user = userRepository.getReferenceById(request.userId());
         var enrolment = new Enrolment(user, course);
+        var savedEnrolment = enrolmentRepository.save(enrolment);
+        course.addEnrolment(savedEnrolment);
+        courseRepository.save(course);
 
-        return new EnrolmentCreateResponse(enrolmentRepository.save(enrolment));
+        return new EnrolmentCreateResponse(enrolmentRepository.save(savedEnrolment));
     }
 
 

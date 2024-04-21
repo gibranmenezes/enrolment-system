@@ -1,4 +1,4 @@
-package io.github.enrolmentsystem.controller;
+package io.github.enrolmentsystem.controller.report;
 
 import io.github.enrolmentsystem.domain.report.reponse.NpsReportResponse;
 import io.github.enrolmentsystem.service.impl.NpsReportService;

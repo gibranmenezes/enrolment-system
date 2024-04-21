@@ -7,14 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface CourseEvaluationRepository extends JpaRepository<CourseEvaluation,Long> {
 
-    @Query("SELECT COUNT(ce) FROM CourseEvaluation ce WHERE ce.course.id = :courseID and ce.rating >= 9 ")
+    @Query("SELECT COUNT(ce) FROM CourseEvaluation ce WHERE ce.course.id = :courseId and ce.rating >= 9 ")
     Long countPromoters(Long courseId);
 
 
-    @Query("SELECT COUNT(ce) FROM CourseEvaluation ce WHERE ce.course.id = :courseID and ce.rating <= 6 ")
+    @Query("SELECT COUNT(ce) FROM CourseEvaluation ce WHERE ce.course.id = :courseId and ce.rating <= 6 ")
     Long countDetractors(Long courseId);
 
-    @Query("SELECT COUNT(ce) FROM CourseEvaluation ce WHERE ce.course.id = :courseID")
+    @Query("SELECT COUNT(ce) FROM CourseEvaluation ce WHERE ce.course.id = :courseId")
     Long countCourseEvaluation(Long courseId);
 
 
