@@ -1,14 +1,12 @@
 spring:
   application:
-    name: name=enrolment-system
+    name: enrolment-system
 
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb  # URL de conexão para um banco de dados em memória
-    username: sa              # Usuário padrão do H2
-    password:                 # Senha vazia por padrão
-
-    h2:
-      console:
-        enabled: true           # Habilita a console web do H2
-        path: /h2-console   
+      url: jdbc:mysql://localhost:3306/alura_db?createDatabaseIfNotExists=true
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+      database-platform: org.hibernate.dialect.MySQLDialect
+      show-sql: true
