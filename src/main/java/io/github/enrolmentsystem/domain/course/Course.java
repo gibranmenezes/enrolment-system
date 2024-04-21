@@ -14,8 +14,8 @@ import java.util.Set;
 @Entity
 @Table(name = "course")
 @Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(of = "code")
 public class Course  {
 

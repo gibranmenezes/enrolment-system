@@ -1,13 +1,9 @@
 package io.github.enrolmentsystem.service.impl;
 
-import io.github.enrolmentsystem.domain.course.Course;
 import io.github.enrolmentsystem.domain.evaluation.CourseEvaluation;
 import io.github.enrolmentsystem.domain.evaluation.request.EvaluationRequest;
-import io.github.enrolmentsystem.domain.user.User;
 import io.github.enrolmentsystem.domain.validations.evaluation.EvaluationSubmitValidator;
-import io.github.enrolmentsystem.infra.exception.ValidationException;
 import io.github.enrolmentsystem.repository.CourseRepository;
-import io.github.enrolmentsystem.repository.EnrolmentRepository;
 import io.github.enrolmentsystem.repository.EvaluationRepository;
 import io.github.enrolmentsystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +18,10 @@ public class CourseEvaluationServiceImpl {
 
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
-    private  NotificationService notificationService;
+    private final  NotificationService notificationService;
+    private final EvaluationRepository evaluationRepository;
 
     private List<EvaluationSubmitValidator> validators = new ArrayList<>();
-    private final EvaluationRepository evaluationRepository;
 
     public void submitEvaluation(EvaluationRequest request){
         validators.forEach(v -> v.validate(request));
