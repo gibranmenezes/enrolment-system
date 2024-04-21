@@ -50,8 +50,15 @@ public class EnrolmentServiceTest {
     public void setUp() {
         user = new User(1L, "joao","joao@gmail.com", "joao", "123456",
                 Role.STUDENT, LocalDate.now());
-        course = new Course(1L, "curso", "code", "desc",
-                user, Status.ACTIVE, LocalDate.now(), LocalDate.now());
+        course = new Course();
+        course.setId(1L);
+        course.setInstructor(user);
+        course.setStatus(Status.ACTIVE);
+        course.setCode( "code");
+        course.setName("curso");
+        course.setDescription("desc");
+        course.setCreatedAt(LocalDate.now());
+        course.setInactivatedAt(LocalDate.now());
         request = new EnronlmentCreateRequest(1L, 1L);
 
        enrol = new Enrolment(user, course);

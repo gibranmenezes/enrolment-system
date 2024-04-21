@@ -4,6 +4,7 @@ import io.github.enrolmentsystem.domain.course.Course;
 import io.github.enrolmentsystem.domain.course.Status;
 import io.github.enrolmentsystem.domain.course.request.CourseCreateRequest;
 import io.github.enrolmentsystem.domain.course.response.CourseDetailsResponse;
+import io.github.enrolmentsystem.domain.evaluation.CourseEvaluation;
 import io.github.enrolmentsystem.domain.user.Role;
 import io.github.enrolmentsystem.domain.user.User;
 import io.github.enrolmentsystem.domain.validations.course.creation.CourseCodeValidation;
@@ -64,11 +65,12 @@ public class CourseServiceTest {
 
     private Course course;
 
+    private CourseEvaluation evaluation;
+
 
 
     @BeforeEach
     public void setup()  {
-        request = new CourseCreateRequest("curso", "curso-test", "desc", 1L);
 
         student = new User(1L, "joao", "joao@gmail.com", "joao", "123456",
                 Role.STUDENT, LocalDate.now());
@@ -76,17 +78,26 @@ public class CourseServiceTest {
         instructor = new User(1L, "joao", "joao@gmail.com", "joao", "123456",
                 Role.INSTRUCTOR, LocalDate.now());
 
-        course = new Course(1L, request.name(), request.code(), request.description(),
-                instructor, Status.ACTIVE, LocalDate.now(), LocalDate.now());
 
     }
 
     @Test
     void testCreateCourse_WhenInstructorExistsAndNoExistCourseWithCode_ThenCreateCourse() {
-        given(userRepository.getReferenceById(request.instructorId())).willReturn(instructor);
-        given(courseRepository.save(any())).willReturn(course);
+        var requestA = new CourseCreateRequest("curso", "curso-test", "desc", 1L);
 
-        var response = service.createCourse(request);
+        User instructorA = new User(1L, "joao", "joao@gmail.com", "joao", "123456",
+                Role.INSTRUCTOR, LocalDate.now());
+
+
+        given(userRepository.getReferenceById(anyLong())).willReturn(instructorA);
+        var savedCourse = new Course(requestA);
+        savedCourse.setId(1L);
+        savedCourse.setInactivatedAt(LocalDate.now());
+        savedCourse.setInstructor(instructorA);
+        given(courseRepository.save(any())).willReturn(savedCourse);
+
+
+        var response = service.createCourse(requestA);
 
         Assertions.assertNotNull(response);
         Assertions.assertEquals(response.code(), "curso-test");
@@ -98,11 +109,23 @@ public class CourseServiceTest {
         int page = 0;
         int size = 10;
 
+        var requestA = new CourseCreateRequest("curso", "curso-test", "desc", 1L);
+        var requestB = new CourseCreateRequest("Curso B", "curso-b", "Descrição do Curso B", 1L);
+
+        var courseA = new Course(requestA);
+        courseA.setId(1L);
+        courseA.setInactivatedAt(LocalDate.now());
+        courseA.setInstructor(instructor);
+
+        var courseB = new Course(requestB);
+        courseB.setId(2L);
+        courseB.setInactivatedAt(LocalDate.now());
+        courseB.setInstructor(instructor);
+
         List<Course> courseList = new ArrayList<>();
-        courseList.add(new Course(1L, "Curso A", "curso-a", "Descrição do Curso A"
-                , instructor, status, LocalDate.now(), null));
-        courseList.add(new Course(2L, "Curso B", "curso-b", "Descrição do Curso B"
-                , instructor, status, LocalDate.now(), null));
+        courseList.add(courseA);
+        courseList.add(courseB);
+
 
         Pageable pageable = PageRequest.of(page, size);
         Page<Course> coursePage = new PageImpl<>(courseList, pageable, courseList.size());
@@ -111,8 +134,8 @@ public class CourseServiceTest {
         Page<CourseDetailsResponse> resultPage = service.getCoursesByStatus(status, pageable);
 
         Assertions.assertEquals(2, resultPage.getTotalElements());
-        Assertions.assertEquals("Curso A", resultPage.getContent().get(0).courseDetails().get("name"));
-        Assertions.assertEquals("curso-a", resultPage.getContent().get(0).courseDetails().get("code"));
+        Assertions.assertEquals("curso", resultPage.getContent().get(0).courseDetails().get("name"));
+        Assertions.assertEquals("curso-test", resultPage.getContent().get(0).courseDetails().get("code"));
         Assertions.assertFalse(resultPage.getContent().get(0).courseDetails().containsKey("inactiveAt"));
         Assertions.assertEquals("Curso B", resultPage.getContent().get(1).courseDetails().get("name"));
         Assertions.assertEquals("curso-b", resultPage.getContent().get(1).courseDetails().get("code"));
@@ -126,11 +149,22 @@ public class CourseServiceTest {
         int page = 0;
         int size = 10;
 
+        var requestA = new CourseCreateRequest("curso", "curso-test", "desc", 1L);
+        var requestB = new CourseCreateRequest("Curso B", "curso-b", "Descrição do Curso B", 1L);
+
+        var courseA = new Course(requestA);
+        courseA.setId(1L);
+        courseA.setInactivatedAt(LocalDate.now());
+        courseA.setCreatedAt(LocalDate.of(2020, 2, 19));
+
+        var courseB = new Course(requestB);
+        courseB.setId(2L);
+        courseB.setInactivatedAt(LocalDate.now());
+        courseB.setCreatedAt(LocalDate.of(2020, 2, 19));
+
         List<Course> courseList = new ArrayList<>();
-        courseList.add(new Course(1L, "Curso A", "curso-a", "Descrição do Curso A"
-                , instructor, status, LocalDate.of(2020, 2, 19),  LocalDate.now()));
-        courseList.add(new Course(2L, "Curso B", "curso-b", "Descrição do Curso B"
-                , instructor, status, LocalDate.of(2020, 2, 19), LocalDate.now()));
+        courseList.add(courseA);
+        courseList.add(courseB);
 
         Pageable pageable = PageRequest.of(page, size);
         Page<Course> coursePage = new PageImpl<>(courseList, pageable, courseList.size());
@@ -150,8 +184,11 @@ public class CourseServiceTest {
 
     @Test
     public void testInactivateCourse_GivenCourseCode_ThenInactivateStatusAndSetInactivateDate(){
-        var courseB = new Course(1L, "cursoB", "curso-b", "desc-b",
-                instructor, Status.ACTIVE, LocalDate.now(), null);
+        var requestB = new CourseCreateRequest("Curso B", "curso-b", "Descrição do Curso B", 1L);
+        var courseB = new Course(requestB);
+        courseB.setId(1L);
+        courseB.setStatus(Status.ACTIVE);
+        courseB.setCreatedAt(LocalDate.now());
         given(courseRepository.findCourseByCode("curso-b")).willReturn(courseB);
 
         service.inactivateCourse("curso-b");
