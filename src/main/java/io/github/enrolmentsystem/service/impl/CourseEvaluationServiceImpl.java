@@ -33,9 +33,11 @@ public class CourseEvaluationServiceImpl {
         evaluation.setCourse(course);
         evaluation.setUser(user);
 
-        evaluationRepository.save(evaluation);
+        var savedEvaluation = evaluationRepository.save(evaluation);
 
-        course.addEvaluation(evaluation);
+        course.addEvaluation(savedEvaluation);
+
+        courseRepository.save(course);
 
         if (evaluation.getRating() < 6) {
             notificationService.lowRatingNotify(course, request.evaluationDescription());
