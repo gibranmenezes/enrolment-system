@@ -6,7 +6,9 @@ import io.github.enrolmentsystem.domain.validations.evaluation.EvaluationSubmitV
 import io.github.enrolmentsystem.repository.CourseRepository;
 import io.github.enrolmentsystem.repository.CourseEvaluationRepository;
 import io.github.enrolmentsystem.repository.UserRepository;
+import io.github.enrolmentsystem.service.CourseEvaluationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,15 +16,16 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CourseEvaluationServiceImpl {
+public class CourseEvaluationServiceImpl implements CourseEvaluationService {
 
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
-    private final  NotificationService notificationService;
+    private final NotificationServiceImpl notificationServiceImpl;
     private final CourseEvaluationRepository courseEvaluationRepository;
-
+    @Autowired
     private List<EvaluationSubmitValidator> validators = new ArrayList<>();
 
+    @Override
     public void submitEvaluation(EvaluationRequest request){
         validators.forEach(v -> v.validate(request));
 
@@ -40,7 +43,7 @@ public class CourseEvaluationServiceImpl {
         courseRepository.save(course);
 
         if (evaluation.getRating() < 6) {
-            notificationService.lowRatingNotify(course, request.evaluationDescription());
+            notificationServiceImpl.lowRatingNotify(course, request.evaluationDescription());
         }
     }
 

@@ -6,6 +6,7 @@ import io.github.enrolmentsystem.domain.report.reponse.NpsReportResponse;
 import io.github.enrolmentsystem.repository.CourseEvaluationRepository;
 import io.github.enrolmentsystem.repository.CourseRepository;
 import io.github.enrolmentsystem.repository.NpsReportRepository;
+import io.github.enrolmentsystem.service.NpsReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class NpsReportService {
+public class NpsReportServiceImpl implements NpsReportService {
 
     private final CourseRepository courseRepository;
     private final CourseEvaluationRepository evaluationRepository;
     private final NpsReportRepository reportRepository;
 
+    @Override
     public NpsReportResponse generateReport(){
         List<Course> courses = courseRepository.getCoursesWithMoreThanFourEnrolments();
         List<NpsReport> reports = new ArrayList<>();

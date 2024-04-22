@@ -16,4 +16,6 @@ public interface CourseService {
 
     Page<CourseDetailsResponse> getCoursesByStatus(Status status, Pageable pagination);
 
+    interface EnrolmentService {
+    }
 }

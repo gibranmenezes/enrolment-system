@@ -7,7 +7,7 @@ import io.github.enrolmentsystem.repository.CourseRepository;
 import io.github.enrolmentsystem.repository.CourseEvaluationRepository;
 import io.github.enrolmentsystem.repository.UserRepository;
 import io.github.enrolmentsystem.service.impl.CourseEvaluationServiceImpl;
-import io.github.enrolmentsystem.service.impl.NotificationService;
+import io.github.enrolmentsystem.service.impl.NotificationServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,7 +30,7 @@ public class EvaluationServiceTest {
     private CourseEvaluationRepository courseEvaluationRepository;
 
     @Mock
-    private NotificationService notificationService;
+    private NotificationServiceImpl notificationServiceImpl;
 
     @InjectMocks
     private CourseEvaluationServiceImpl courseEvaluationService;
@@ -56,6 +56,6 @@ public class EvaluationServiceTest {
         courseEvaluationService.submitEvaluation(request);
 
         verify(courseEvaluationRepository, times(1)).save(any());
-        verify(notificationService, times(1)).lowRatingNotify(eq(course), eq("This course was not so good."));
+        verify(notificationServiceImpl, times(1)).lowRatingNotify(eq(course), eq("This course was not so good."));
     }
 }

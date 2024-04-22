@@ -1,4 +1,4 @@
-package io.github.enrolmentsystem.service;
+package io.github.enrolmentsystem.service.impl;
 
 import io.github.enrolmentsystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

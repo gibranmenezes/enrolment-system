@@ -2,7 +2,7 @@ package io.github.enrolmentsystem.controller.authentication;
 
 import io.github.enrolmentsystem.domain.authentication.AuthenticationData;
 import io.github.enrolmentsystem.infra.security.TokenDataJwt;
-import io.github.enrolmentsystem.service.impl.AuthenticationService;
+import io.github.enrolmentsystem.service.impl.AuthenticationServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-    private final AuthenticationService authenticationService;
+    private final AuthenticationServiceImpl authenticationServiceImpl;
     @PostMapping("/login")
     public ResponseEntity<TokenDataJwt> login(@RequestBody @Valid AuthenticationData data){
-        var token = authenticationService.authenticate(data);
+        var token = authenticationServiceImpl.authenticate(data);
         return ResponseEntity.ok(token);
 
     }
