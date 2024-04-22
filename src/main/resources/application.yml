@@ -1,16 +1,18 @@
 spring:
   application:
     name: enrolment-system
-
   datasource:
       url: jdbc:mysql://mysql:3306/alura_db?createDatabaseIfNotExists=true
       username: root
       password: root
       driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-      database-platform: org.hibernate.dialect.MySQLDialect
-      show-sql: true
-
+    hibernate:
+      ddl-auto: create-drop
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: true
 api:
   security:
     token:

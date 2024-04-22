@@ -4,7 +4,9 @@ package io.github.enrolmentsystem.repository;
 import io.github.enrolmentsystem.domain.evaluation.CourseEvaluation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface CourseEvaluationRepository extends JpaRepository<CourseEvaluation,Long> {
 
     @Query("SELECT COUNT(ce) FROM CourseEvaluation ce WHERE ce.course.id = :courseId and ce.rating >= 9 ")

@@ -1,38 +1,36 @@
 networks:
-  alura-network:
+  alura_network:
     driver: bridge
 
 services:
   enrolment-system:
-    image: maven:3.9.6-eclipse-temurin-22-alpine
+    image: maven:3.9.6-eclipse-temurin-21
     container_name: enrolment-system
-    restart: always
     working_dir: /home/enrolment-system
     env_file:
       - ./enrolment-system.env
-    environment:
-      SPRING_APPLICATION_JSON: '{
-            "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false",
-            "spring.datasource.username" : "$MYSQLDB_USER",
-            "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
-            "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect"            
-          }'
     ports:
       - 8080:8080
     volumes:
       - ../:/home/enrolment-system/:rw
-    command: mvn spring-boot:run -DskipTests
-    depends_on:
-      - mysql
+    command: mvn spring-boot:run
     networks:
-      - alura-network
+      - alura_network
 
   mysql:
     image: mysql
     container_name: mysql
     env_file:
-      - ./enrolment-system.env
+      - ./mysql.env
     ports:
-      - 3307:3306
+      - 3306:3306
     networks:
-      - alura-network
+      - alura_network
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
+    networks:
+      - alura_network
