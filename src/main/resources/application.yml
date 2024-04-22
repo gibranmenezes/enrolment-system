@@ -16,5 +16,7 @@ api:
   security:
     token:
       secret: ${JWT_SECRET:123456}
-
+server:
+  error:
+    include-stacktrace: never
 
