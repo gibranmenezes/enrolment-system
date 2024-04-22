@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
                throw new ValidationException("Username and email already registered");
           }
           var encriptedPassword = new BCryptPasswordEncoder().encode(request.password());
-          var user = new User(request.username(), request.username(), encriptedPassword);
+          var user = new User(request.username(), request.email(), encriptedPassword);
           user.setName(request.name());
           user.setRole(request.role());
           user.setCreatedAt(LocalDate.now());
