@@ -1,6 +1,6 @@
-user alura_db;
+use alura_db;
 
---INSERINDO USUARIOS
+
 
 INSERT INTO USER (ID, NAME, USERNAME, EMAIL, PASSWORD, ROLE, created_at) 
 VALUES (1, 'Maria Silva', 'msilva', 'msilva@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'ADMIN', '2024-01-01');
@@ -39,13 +39,10 @@ INSERT INTO USER (ID, NAME, USERNAME, EMAIL, PASSWORD, ROLE, created_at)
 VALUES (12, 'Lucas Silva', 'lsilva', 'lsilva@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'USER', '2024-01-01');
 
 
---INSERINDO CURSOS
-
-
-INSERT INTO COURSER (ID, NAME, CODE, DESCRIPTION, USER_ID, STATUS, created_at, INACTIVATED_AT) VALUES (1, 'cursoA', "curso-a", "curso A", 2 , "ACTIVE", '2024-01-01', null);
-INSERT INTO COURSER (ID, NAME, CODE, DESCRIPTION, USER_ID, STATUS, created_at, INACTIVATED_AT) VALUES (2, 'cursoB', "curso-b", "curso B", 2 , "ACTIVE", '2024-01-01', null);
-INSERT INTO COURSER (ID, NAME, CODE, DESCRIPTION, USER_ID, STATUS, created_at, INACTIVATED_AT) VALUES (3, 'cursoC', "curso-c", "curso C", 2 , "ACTIVE", '2024-01-01', null);
-INSERT INTO COURSER (ID, NAME, CODE, DESCRIPTION, USER_ID, STATUS, created_at, INACTIVATED_AT) VALUES (4, 'cursoD', "curso-d", "curso D", 2 , "ACTIVE", '2024-01-01', null);
+INSERT INTO COURSE (ID, NAME, CODE, DESCRIPTION, USER_ID, STATUS, created_at, INACTIVATED_AT) VALUES (1, 'cursoA', "curso-a", "curso A", 2 , "ACTIVE", '2024-01-01', null);
+INSERT INTO COURSE (ID, NAME, CODE, DESCRIPTION, USER_ID, STATUS, created_at, INACTIVATED_AT) VALUES (2, 'cursoB', "curso-b", "curso B", 2 , "ACTIVE", '2024-01-01', null);
+INSERT INTO COURSE (ID, NAME, CODE, DESCRIPTION, USER_ID, STATUS, created_at, INACTIVATED_AT) VALUES (3, 'cursoC', "curso-c", "curso C", 2 , "ACTIVE", '2024-01-01', null);
+INSERT INTO COURSE (ID, NAME, CODE, DESCRIPTION, USER_ID, STATUS, created_at, INACTIVATED_AT) VALUES (4, 'cursoD', "curso-d", "curso D", 2 , "ACTIVE", '2024-01-01', null);
 
 --INSERINDO MATRICULAS
 
