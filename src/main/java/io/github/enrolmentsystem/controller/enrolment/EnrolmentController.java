@@ -3,6 +3,7 @@ package io.github.enrolmentsystem.controller.enrolment;
 import io.github.enrolmentsystem.domain.enrolment.request.EnronlmentCreateRequest;
 import io.github.enrolmentsystem.domain.enrolment.response.EnrolmentCreateResponse;
 import io.github.enrolmentsystem.service.impl.EnrolmentServiceImpl;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("enrolment")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearer-key")
 public class EnrolmentController {
 
     private final EnrolmentServiceImpl enrolmentService;

@@ -6,6 +6,7 @@ import io.github.enrolmentsystem.domain.course.response.CourseCreateResponse;
 import io.github.enrolmentsystem.domain.course.response.CourseDetailsResponse;
 import io.github.enrolmentsystem.domain.course.response.CourseUpdateResponse;
 import io.github.enrolmentsystem.service.impl.CourseServiceImpl;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("courses")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearer-key")
 public class CourseController {
 
     private final CourseServiceImpl courseService;

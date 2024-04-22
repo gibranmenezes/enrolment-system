@@ -4,6 +4,7 @@ import io.github.enrolmentsystem.domain.user.request.UserCreateRequest;
 import io.github.enrolmentsystem.domain.user.response.UserCreateResponse;
 import io.github.enrolmentsystem.domain.user.response.UserDetailsResponse;
 import io.github.enrolmentsystem.service.impl.UserServiceImpl;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ public class UserController {
         return ResponseEntity.ok(userService.register(request));
     }
 
+    @SecurityRequirement(name = "bearer-key")
     @GetMapping("/{username}")
     public ResponseEntity<UserDetailsResponse> getUser(@PathVariable String username){
         return ResponseEntity.ok(userService.getByUsername(username));

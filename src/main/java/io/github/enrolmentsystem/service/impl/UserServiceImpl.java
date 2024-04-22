@@ -8,8 +8,11 @@ import io.github.enrolmentsystem.infra.exception.ValidationException;
 import io.github.enrolmentsystem.repository.UserRepository;
 import io.github.enrolmentsystem.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +26,11 @@ public class UserServiceImpl implements UserService {
           if (userRepository.existsByUsernameAndEmail(request.username(), request.email())) {
                throw new ValidationException("Username and email already registered");
           }
-          var user = new User(request);
+          var encriptedPassword = new BCryptPasswordEncoder().encode(request.password());
+          var user = new User(request.username(), request.username(), encriptedPassword);
+          user.setName(request.name());
+          user.setRole(request.role());
+          user.setCreatedAt(LocalDate.now());
 
           return new UserCreateResponse(userRepository.save(user));
      }
