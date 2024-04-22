@@ -1,0 +1,29 @@
+networks:
+  alura-network:
+    driver: bridge
+
+services:
+  enrolment-system:
+    image: maven:3.9.6-eclipse-temurin-17
+    container_name: enrolment-system
+    restart: always
+    working_dir: /home/enrolment-system
+    env_file:
+      - ./enrolment-system.env
+    ports:
+      - 8080:8080
+    volumes:
+      - ../:/enrolment-system/:rw
+    command: mvn spring-boot:run -DskipTests
+    networks:
+      - alura-network
+
+  mysql:
+    image: mysql
+    container_name: mysql
+    env_file:
+      - mysql.env
+    ports:
+      - 3307:3307
+    networks:
+      - alura-network
