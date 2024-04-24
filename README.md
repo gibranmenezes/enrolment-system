@@ -2,7 +2,7 @@
 
 Project developed in Alura Code Challenge.
 
-For more information about the specifications : `https://drive.google.com/file/d/1SyeaazHMBT0CjLYJufntRccCY_9YlLj_/view?usp=drive_link`
+For more information about the specifications : `https://drive.google.com/file/d/1SyeaazHMBT0CjLYJufntRccCY_9YlLj_/view?usp=drive_link`. For all users you should use the password: 123456.
 
 
 ### 📋 Requirements
