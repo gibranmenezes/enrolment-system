@@ -1,10 +1,9 @@
-package io.github.enrolmentsystem.services.course;
+package io.github.enrolmentsystem.course.service;
 
 import io.github.enrolmentsystem.domain.course.Course;
 import io.github.enrolmentsystem.domain.course.Status;
 import io.github.enrolmentsystem.domain.course.request.CourseCreateRequest;
 import io.github.enrolmentsystem.domain.course.response.CourseDetailsResponse;
-import io.github.enrolmentsystem.domain.evaluation.CourseEvaluation;
 import io.github.enrolmentsystem.domain.user.Role;
 import io.github.enrolmentsystem.domain.user.User;
 import io.github.enrolmentsystem.domain.validations.course.creation.CourseCodeValidation;
@@ -16,13 +15,10 @@ import io.github.enrolmentsystem.repository.UserRepository;
 import io.github.enrolmentsystem.service.impl.CourseServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.mockito.BDDMockito.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -31,12 +27,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
@@ -57,22 +48,16 @@ public class CourseServiceTest {
     @InjectMocks
     private CourseServiceImpl service;
 
-    private CourseCreateRequest request;
-
     private User instructor;
 
-    private User student;
-
-    private Course course;
-
-    private CourseEvaluation evaluation;
+  
 
 
 
     @BeforeEach
     public void setup()  {
 
-        student = new User(1L, "joao", "joao@gmail.com", "joao", "123456",
+        new User(1L, "joao", "joao@gmail.com", "joao", "123456",
                 Role.STUDENT, LocalDate.now());
 
         instructor = new User(1L, "joao", "joao@gmail.com", "joao", "123456",

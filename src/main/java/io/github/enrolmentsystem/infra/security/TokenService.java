@@ -24,6 +24,7 @@ public class TokenService {
             return JWT.create()
                     .withIssuer("enrolment-system")
                     .withSubject(user.getUsername())
+                    .withExpiresAt(expirationDate())
                     .sign(algorithm);
         } catch (JWTCreationException exception){
             throw new RuntimeException("Token not generated", exception);

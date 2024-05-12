@@ -35,14 +35,6 @@ public class EvaluationServiceTest {
     @InjectMocks
     private CourseEvaluationServiceImpl courseEvaluationService;
 
-    private  EvaluationRequest request;
-
-    private User user;
-
-    private Course course;
-
-
-
     @Test
     public void testSubmitEvaluation() {
         EvaluationRequest request = new EvaluationRequest("javao", 1L, 4, "This course was not so good.");

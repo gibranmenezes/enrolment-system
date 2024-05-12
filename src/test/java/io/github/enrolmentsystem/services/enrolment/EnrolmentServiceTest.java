@@ -10,7 +10,6 @@ import io.github.enrolmentsystem.domain.user.User;
 import io.github.enrolmentsystem.repository.CourseRepository;
 import io.github.enrolmentsystem.repository.EnrolmentRepository;
 import io.github.enrolmentsystem.repository.UserRepository;
-import io.github.enrolmentsystem.service.EnrolmentService;
 import io.github.enrolmentsystem.service.impl.EnrolmentServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,8 +20,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.util.Optional;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 

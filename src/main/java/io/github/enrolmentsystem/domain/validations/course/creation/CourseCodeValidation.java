@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 public class CourseCodeValidation implements CreateCourseValidator{
 
     private final CourseRepository courseRepository;
+    
     public void validate(CourseCreateRequest request) {
         if (courseRepository.existsByCode(request.code())) {
             throw new ValidationException("This course already exists!");

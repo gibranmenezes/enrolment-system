@@ -1,11 +1,9 @@
 package io.github.enrolmentsystem.service.impl;
 
-import io.github.enrolmentsystem.domain.course.Status;
 import io.github.enrolmentsystem.domain.enrolment.Enrolment;
 import io.github.enrolmentsystem.domain.enrolment.request.EnronlmentCreateRequest;
 import io.github.enrolmentsystem.domain.enrolment.response.EnrolmentCreateResponse;
 import io.github.enrolmentsystem.domain.validations.enrolment.CreateEnrolmentValidator;
-import io.github.enrolmentsystem.infra.exception.ValidationException;
 import io.github.enrolmentsystem.repository.CourseRepository;
 import io.github.enrolmentsystem.repository.EnrolmentRepository;
 import io.github.enrolmentsystem.repository.UserRepository;
@@ -13,8 +11,6 @@ import io.github.enrolmentsystem.service.EnrolmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 

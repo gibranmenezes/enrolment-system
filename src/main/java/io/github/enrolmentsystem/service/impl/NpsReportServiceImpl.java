@@ -20,32 +20,26 @@ public class NpsReportServiceImpl implements NpsReportService {
 
     private final CourseRepository courseRepository;
     private final CourseEvaluationRepository evaluationRepository;
-    private final NpsReportRepository reportRepository;
+  
 
     @Override
     public NpsReportResponse generateReport(){
         List<Course> courses = courseRepository.getCoursesWithMoreThanFourEnrolments();
-        List<NpsReport> reports = new ArrayList<>();
-        courses.forEach(c -> {
-            var totalEvaluations = evaluationRepository.countCourseEvaluation(c.getId());
-            var promoters = evaluationRepository.countPromoters(c.getId());
-            var defractors = evaluationRepository.countDetractors(c.getId());
+        List<NpsReport> reports = evaluationRepository.getReports(courses);
 
-            var courseCode = c.getCode();
-            var instructorUsername = c.getInstructor().getUsername();
-            var nps = calculateNPS(totalEvaluations, promoters, defractors).longValue();
-            var report = new NpsReport(courseCode, instructorUsername, totalEvaluations,
-                    promoters, defractors, nps);
+        reports.forEach(report -> {
+            var promoters = BigDecimal.valueOf(report.getPromoters());
+            var detractors = BigDecimal.valueOf(report.getDetractors());
+            var totalEvaluations = BigDecimal.valueOf(report.getTotalEvaluations());
 
-            reportRepository.save(report);
-            reports.add(report);
+            report.setNps(this.calculateNPS(totalEvaluations, promoters, detractors));
         });
-
+       
         return new NpsReportResponse(reports);
     }
 
-    private BigDecimal calculateNPS(Long totalEvaluations, Long promoters, Long defractors){
-        return new BigDecimal(promoters - defractors).divide(BigDecimal.valueOf(totalEvaluations)).multiply(BigDecimal.valueOf(100));
+    private BigDecimal calculateNPS(BigDecimal totalEvaluations, BigDecimal promoters, BigDecimal defractors){
+        return  ((promoters).subtract(defractors)).divide(totalEvaluations).multiply(BigDecimal.valueOf(100));
     }
 
 
