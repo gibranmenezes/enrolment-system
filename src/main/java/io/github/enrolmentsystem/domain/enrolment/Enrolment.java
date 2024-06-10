@@ -21,18 +21,18 @@ public class Enrolment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private User student;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
-    private LocalDate enrollmentAt;
+    private LocalDate enrolmentAt;
 
-    public Enrolment(User user, Course course){
-        this.user = user;
+    public Enrolment(User student, Course course){
+        this.student = student;
         this.course = course;
-        this.enrollmentAt = LocalDate.now();
+        this.enrolmentAt = LocalDate.now();
     }
 }

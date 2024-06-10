@@ -9,34 +9,34 @@ INSERT INTO USER (ID, NAME, USERNAME, EMAIL, PASSWORD, ROLE, created_at)
 VALUES (2, 'Joao Silva', 'jsilva', 'jsilva@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'INSTRUCTOR', '2024-01-01');
 
 INSERT INTO USER (ID, NAME, USERNAME, EMAIL, PASSWORD, ROLE, created_at) 
-VALUES (3, 'Ana Souza', 'asouza', 'asouza@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'USER', '2024-01-01');
+VALUES (3, 'Ana Souza', 'asouza', 'asouza@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'STUDENT', '2024-01-01');
 
 INSERT INTO USER (ID, NAME, USERNAME, EMAIL, PASSWORD, ROLE, created_at) 
-VALUES (4, 'Pedro Oliveira', 'poliveira', 'poliveira@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'USER', '2024-01-01');
+VALUES (4, 'Pedro Oliveira', 'poliveira', 'poliveira@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'STUDENT', '2024-01-01');
 
 INSERT INTO USER (ID, NAME, USERNAME, EMAIL, PASSWORD, ROLE, created_at) 
-VALUES (5, 'Laura Santos', 'lsantos', 'lsantos@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'USER', '2024-01-01');
+VALUES (5, 'Laura Santos', 'lsantos', 'lsantos@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'STUDENT', '2024-01-01');
 
 INSERT INTO USER (ID, NAME, USERNAME, EMAIL, PASSWORD, ROLE, created_at) 
-VALUES (6, 'Carlos Oliveira', 'coliveira', 'coliveira@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'USER', '2024-01-01');
+VALUES (6, 'Carlos Oliveira', 'coliveira', 'coliveira@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'STUDENT', '2024-01-01');
 
 INSERT INTO USER (ID, NAME, USERNAME, EMAIL, PASSWORD, ROLE, created_at) 
-VALUES (7, 'Fernanda Costa', 'fcosta', 'fcosta@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'USER', '2024-01-01');
+VALUES (7, 'Fernanda Costa', 'fcosta', 'fcosta@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'STUDENT', '2024-01-01');
 
 INSERT INTO USER (ID, NAME, USERNAME, EMAIL, PASSWORD, ROLE, created_at) 
-VALUES (8, 'Ricardo Santos', 'rsantos', 'rsantos@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'USER', '2024-01-01');
+VALUES (8, 'Ricardo Santos', 'rsantos', 'rsantos@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'STUDENT', '2024-01-01');
 
 INSERT INTO USER (ID, NAME, USERNAME, EMAIL, PASSWORD, ROLE, created_at) 
-VALUES (9, 'Amanda Oliveira', 'aoliveira', 'aoliveira@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'USER', '2024-01-01');
+VALUES (9, 'Amanda Oliveira', 'aoliveira', 'aoliveira@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'STUDENT', '2024-01-01');
 
 INSERT INTO USER (ID, NAME, USERNAME, EMAIL, PASSWORD, ROLE, created_at) 
-VALUES (10, 'Bruno Lima', 'blima', 'blima@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'USER', '2024-01-01');
+VALUES (10, 'Bruno Lima', 'blima', 'blima@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'STUDENT', '2024-01-01');
 
 INSERT INTO USER (ID, NAME, USERNAME, EMAIL, PASSWORD, ROLE, created_at) 
-VALUES (11, 'Julia Ferreira', 'jferreira', 'jferreira@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'USER', '2024-01-01');
+VALUES (11, 'Julia Ferreira', 'jferreira', 'jferreira@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'STUDENT', '2024-01-01');
 
 INSERT INTO USER (ID, NAME, USERNAME, EMAIL, PASSWORD, ROLE, created_at) 
-VALUES (12, 'Lucas Silva', 'lsilva', 'lsilva@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'USER', '2024-01-01');
+VALUES (12, 'Lucas Silva', 'lsilva', 'lsilva@gmail.com', '$2a$12$5/tPZlSa8TK/6MURen.ime5Sb5s7.5ogd9nmYQAi8AyxFEX4TPD2m', 'STUDENT', '2024-01-01');
 
 
 INSERT INTO COURSE (ID, NAME, CODE, DESCRIPTION, USER_ID, STATUS, created_at, INACTIVATED_AT) VALUES (1, 'cursoA', "curso-a", "curso A", 2 , "ACTIVE", '2024-01-01', null);

@@ -7,5 +7,5 @@ CREATE TABLE course (
                         status VARCHAR(100) NOT NULL,
                         created_at DATE NOT NULL,
                         inactivated_at DATE,
-                        FOREIGN KEY (user_id) REFERENCES user (id)
+                        FOREIGN KEY (user_id) REFERENCES users (id)
 );

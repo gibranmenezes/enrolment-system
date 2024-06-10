@@ -31,12 +31,12 @@ public interface CourseEvaluationRepository extends JpaRepository<CourseEvaluati
             c.instructor.name,
             COUNT(e.rating>=9),
             COUNT(e.rating<=4),
-            COUNT(e)
+            COUNT(e))
             FROM Course c
             INNER JOIN c.evaluations e
             WHERE c in :courses
             GROUP BY c.code
-           ) 
+            
             """)
     List<NpsReport> getReports(List<Course> courses);
 

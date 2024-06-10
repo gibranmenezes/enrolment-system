@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table
+@Table(name = "users")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -50,6 +50,15 @@ public class User implements UserDetails {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String name, String username, String email, String password, Role role){
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role =role;
+        this.createdAt = LocalDate.now();
     }
 
     @Override

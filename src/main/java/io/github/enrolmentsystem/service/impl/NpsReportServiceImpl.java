@@ -5,13 +5,11 @@ import io.github.enrolmentsystem.domain.report.NpsReport;
 import io.github.enrolmentsystem.domain.report.reponse.NpsReportResponse;
 import io.github.enrolmentsystem.repository.CourseEvaluationRepository;
 import io.github.enrolmentsystem.repository.CourseRepository;
-import io.github.enrolmentsystem.repository.NpsReportRepository;
 import io.github.enrolmentsystem.service.NpsReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

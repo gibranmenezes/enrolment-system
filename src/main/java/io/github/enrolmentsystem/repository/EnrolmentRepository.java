@@ -11,8 +11,8 @@ public interface EnrolmentRepository extends JpaRepository<Enrolment, Long> {
     @Query("""
         SELECT CASE WHEN count(e) > 0 THEN true ELSE false END
         FROM Enrolment e
-        WHERE e.user.id = :userId
+        WHERE e.student.id = :studentId
     """)
-    Boolean existsEnrolmentByUser(Long userId);
+    Boolean existsEnrolmentByUser(Long studentId);
 
 }

@@ -33,7 +33,7 @@ public class Course  {
     private String description;
 
     @Setter
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User instructor;
 
@@ -51,7 +51,7 @@ public class Course  {
     private List<Enrolment> enrolments = new ArrayList<>();
 
     @OneToMany(mappedBy = "course")
-    private List<CourseEvaluation> courseEvaluations = new ArrayList<>();
+    private List<CourseEvaluation> evaluations = new ArrayList<>();
 
     public Course(CourseCreateRequest request) {
         this.status = Status.ACTIVE;
@@ -62,13 +62,26 @@ public class Course  {
         this.inactivatedAt = null;
 
     }
+
+    
+    public Course(String name, String code, String description, User instructor) {
+        this.name = name;
+        this.code = code;
+        this.description = description;
+        this.instructor = instructor;
+        this.status = Status.ACTIVE;
+        this.createdAt = LocalDate.now();
+        this.inactivatedAt = null;
+    }
+
+
     public void inactivateCourse(){
         this.status = Status.INACTIVE;
         this.inactivatedAt = LocalDate.now();
     }
 
     public void addEvaluation(CourseEvaluation evaluation){
-        this.courseEvaluations.add(evaluation);
+        this.evaluations.add(evaluation);
     }
 
     public void addEnrolment(Enrolment enrolment){
